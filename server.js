@@ -11,7 +11,7 @@ const app = express();
 
 app.use(express.json()); 
 
-const PORT =  8200;
+const PORT =  process.env.PORT;
 app.get('/', (req, res) => {
   res.send('OK');
 });
