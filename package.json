@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",  // Command to start the Express server
+    "dev": "nodemon index.js", // Use nodemon for development (auto-restart server on file changes)
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
