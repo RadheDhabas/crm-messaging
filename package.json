@@ -1,7 +1,7 @@
 {
-  "name": "express",
+  "name": "crm messaging",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node index.js",  // Command to start the Express server
     "dev": "nodemon index.js", // Use nodemon for development (auto-restart server on file changes)
