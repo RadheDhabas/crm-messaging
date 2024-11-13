@@ -16,7 +16,7 @@ router.get('/send-first-message', async(req,res)=>{
       "type": "template",
       "template": {
         "name": "hello_world",
-        "language": { "code": "en" }
+        "language": { "code": "en_US" }
       }
     };
     try {
@@ -24,6 +24,7 @@ router.get('/send-first-message', async(req,res)=>{
       
       console.log('Status Code:', response.status);
       console.log('Response Data:', response.data);
+      res.status(200).json({"status":"ok"})
     } catch (error) {
       console.error('Error sending message:', error.response ? error.response.data : error.message);
     }
