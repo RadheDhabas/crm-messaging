@@ -3,25 +3,25 @@ import axios from "axios";
 const router = express.Router();
 
 router.get('/send-first-message', async(req,res)=>{
-    const url = `https://graph.facebook.com/${VERSION}/${PHONE_NUMBER_ID}/messages`;
+    const url = `https://graph.facebook.com/${process.env.VERSION}/${process.env.PHONE_NUMBER_ID}/messages`;
   
     const headers = {
-      "Authorization": `Bearer ${ACCESS_TOKEN}`,
+      "Authorization": `Bearer ${process.env.ACCESS_TOKEN}`,
       "Content-Type": "application/json"
     };
   
     const data = {
       "messaging_product": "whatsapp",
-      "to": RECIPIENT_WAID,
+      "to": process.env.RECIPIENT_WAID,
       "type": "template",
       "template": {
-        "name": "r_test_1",
+        "name": "hello_world",
         "language": { "code": "en" }
       }
     };
-  
     try {
       const response = await axios.post(url, data, { headers });
+      
       console.log('Status Code:', response.status);
       console.log('Response Data:', response.data);
     } catch (error) {
