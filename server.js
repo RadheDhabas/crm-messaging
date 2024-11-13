@@ -3,11 +3,11 @@ import dotenv from "dotenv";
 import startmessage from './routes/startmessage.js';
 import webhook from './routes/webhook.js';
 
-// import cors from "cors";
+import cors from "cors";
 dotenv.config();
 
 const app = express();
-// app.use(cors());
+app.use(cors());
 
 app.use(express.json()); 
 
