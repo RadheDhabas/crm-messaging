@@ -1,4 +1,4 @@
-import express from 'express';
+
 import { isValidWhatsappMessage, processWhatsappMessage2 } from '../services/WhatsAppService.js';
 
 function handelMessages(req,res){
