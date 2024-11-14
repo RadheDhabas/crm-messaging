@@ -1,13 +1,13 @@
-
+import crypto from 'crypto';
 
 const validateSignature = (payload, signature) => {
-  // Get the APP_SECRET from environment variables or config
-  const appSecret = process.env.APP_SECRET;  // Replace with actual secret or use config
-
-  // Generate the expected signature using the payload and APP_SECRET
+  const appSecret = process.env.APP_SECRET;
+  const payloadString = JSON.stringify(payload);
+  console.log("inside validate signature fn...");
+ 
   const expectedSignature = crypto
-    .createHmac('sha256', appSecret)
-    .update(payload, 'utf-8')
+    .createHmac('sha256', Buffer.from(appSecret, 'latin1'))
+    .update(payloadString, 'utf8')
     .digest('hex');
 
   // Compare the computed signature with the incoming signature
@@ -16,16 +16,16 @@ const validateSignature = (payload, signature) => {
 const signatureRequired = (req, res, next) => {
   const signature = req.headers['x-hub-signature-256'];  // Get the signature from header
   if (!signature) {
-    logging.info("Signature header missing!");
+    console.log("Signature header missing!");
     return res.status(403).json({ status: "error", message: "Signature missing" });
   }
 
   // Remove 'sha256=' prefix from the signature
   const actualSignature = signature.substring(7);  // Remove 'sha256='
-
+  
   // Validate the signature
-  if (!validateSignature(req.rawBody, actualSignature)) {
-    logging.info("Signature verification failed!");
+  if (!validateSignature(req.body, actualSignature)) {
+    console.log("Signature verification failed!");
     return res.status(403).json({ status: "error", message: "Invalid signature" });
   }
 
@@ -33,4 +33,4 @@ const signatureRequired = (req, res, next) => {
   next();
 };
 
-  export default signatureRequired;
+export default signatureRequired;
