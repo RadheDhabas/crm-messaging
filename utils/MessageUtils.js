@@ -5,7 +5,7 @@ const messageReply = (recipient, input) => {
       data = {
         messaging_product: 'whatsapp',
         recipient_type: 'individual',
-        to: 'PHONE_NUMBER',  // Replace with actual recipient number
+        to: recipient,  // Replace with actual recipient number
         type: 'template',
         template: {
           name: 'r_default',
@@ -19,7 +19,19 @@ const messageReply = (recipient, input) => {
           }]
         }
       };
-    } else {
+    }
+    else if(input === 'test'){
+      data = {
+        "messaging_product": "whatsapp",
+        "to": recipient,
+        "type": "template",
+        "template": {
+          "name": "hello_world",
+          "language": { "code": "en_US" }
+        }
+      };
+    }
+    else {
       data = {
         messaging_product: 'whatsapp',
         to: recipient,
