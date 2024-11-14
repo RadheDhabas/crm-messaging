@@ -1,21 +1,24 @@
+import axios from "axios";
 import messageReply from "../utils/MessageUtils.js";
 
 const sendMessage = async (data) => {
     const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.ACCESS_TOKEN}`,  // Replace with environment variables
-    };
+        "Authorization": `Bearer ${process.env.ACCESS_TOKEN}`,
+        "Content-Type": "application/json"
+      };
 
     const url = `https://graph.facebook.com/${process.env.VERSION}/${process.env.PHONE_NUMBER_ID}/messages`;
 
     try {
         const response = await axios.post(url, data, { headers });
+        console.log('Status Code:', response.status);
+        console.log('Response Data:', response.data);
         return response.data;
     } catch (error) {
         if (error.code === 'ECONNABORTED') {
             return { status: 'error', message: 'Request timed out' };
         }
-        logging.error(`Failed to send message: ${error.message}`);
+        console.log(`Failed to send message: ${error.message}`);
         return { status: 'error', message: `Failed to send message: ${error.message}` };
     }
 };
@@ -65,13 +68,13 @@ const processWhatsappMessage2 = async (body) => {
             messageBody = messages.button.text;
         }
 
-        logging.info(`Processed message body: ${messageBody}`);
+        console.log(`Processed message body: ${messageBody}`);
 
         const data = messageReply(process.env.RECIPIENT_WAID, messageBody);
-
+        console.log(data);
         await sendMessage(data);
     } catch (error) {
-        logging.error('Error processing WhatsApp message:', error);
+        console.log('Error processing WhatsApp message:', error);
     }
 };
 
